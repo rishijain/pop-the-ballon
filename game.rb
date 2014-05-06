@@ -4,14 +4,18 @@ require 'gosu'
 class Game < Gosu::Window
 
   GAMETIME = 15 #in seconds
-  BALLOONCOUNT = 40
+  BALLOONFRAMES = 15  #1 farme consist of 7 balloons
 
   def initialize
     super 800, 600, false
     self.caption = 'Pop-the-Balloon'
     @car = Car.new(self)  
+    xy_values = []
+    BALLOONFRAMES.times do |d|
+      xy_values.push([100, 400 + d*200], [200,300 + d*200], [300, 200 +d*200], [400, 100 + d*200], [500, 200 + d*200], [600, 300 +d*200], [700, 400+d*200])
+    end
     @enemy_cars = []
-    BALLOONCOUNT.times {|d| @enemy_cars.push Enemy.new(self, 100*rand(5), 100*rand(5) + 400)}
+    xy_values.each{|d| @enemy_cars.push Enemy.new(self, d[0], d[1])}
     @counter = 0
     @time_spent = 0
     @time_spent_message = Gosu::Font.new(self, Gosu::default_font_name, 20)
@@ -20,7 +24,7 @@ class Game < Gosu::Window
     @balloons_popped_count = Gosu::Font.new(self, Gosu::default_font_name, 20)
     @pop_sound = Gosu::Song.new(self, "beep.wav")
     @bg_sound = Gosu::Song.new(self, "laughter.mp3")
-    @final_score_msg = Gosu::Image.from_text(self, "Total Balloons popped: #{@counter}", Gosu.default_font_name, 50)
+    @final_score_msg = Gosu::Image.from_text(self, "GAME OVER !!!", Gosu.default_font_name, 50)
     @message_height = 700 #for message to be invisible at start of game
   end
 
@@ -35,14 +39,16 @@ class Game < Gosu::Window
   end
 
   def balloon_popped?(obj1, obj2)
-    obj1.x > obj2.x - obj1.w and obj1.x < obj2.x + obj2.w and obj1.y > obj2.y - obj1.h and obj1.y < obj2.y + obj2.h
+    x_dist = (obj1.x - obj2.x) 
+    y_dist = (obj1.y - obj2.y) 
+    (x_dist >= 0.0 and x_dist <= 20.0) and (y_dist >= 0.0 and y_dist <= 45.0)
   end
 
   def update
     @time_spent = @time_spent + 1 if @time_spent/60 < GAMETIME
     if time_up?
       @pop_sound.stop       #stop the pop sound
-      @bg_sound.play(true)  #start the game end sound
+      #@bg_sound.play(true)  #start the game end sound
       @message_height = 250 #set height so that message moves up the screen where it could be seen
     else
       @enemy_cars.each do |balloon| 
