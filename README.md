@@ -5,6 +5,6 @@ pop-the-ballon
 A ruby game - Pop the balloon.
 The challenge is to pop as many balloons you can in 15 seconds.
 
-Commands:
+##Controls:
 1. Use arrow keys to move the pin.
 2. Balloon can only be popped when pin touches the pin to the left side of the balloon.
