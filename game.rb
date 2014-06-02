@@ -1,10 +1,10 @@
 require 'gosu'
+require_relative 'features/car'
+require_relative 'features/enemy'
+require_relative 'constant'
 
 ### this is the main game window
 class Game < Gosu::Window
-
-  GAMETIME = 15 #in seconds
-  BALLOONFRAMES = 15  #1 farme consist of 7 balloons
 
   def initialize
     super 800, 600, false
@@ -77,65 +77,6 @@ class Game < Gosu::Window
     @time_spent/60 == GAMETIME 
   end
 end
-
-
-#### Enemy class is here meant to be balloons which needs to be popped
-#### Will change it to Balloon eventually
-class Enemy
-  attr_reader :x, :y, :w, :h
-
-  def initialize(window, x, y)
-    @x = x
-    @y = y
-    @w = 10
-    @h = 20
-    @image = Gosu::Image.new(window, 'red-balloon.png', false)
-  end
-
-  def update
-    @y = @y - 2
-  end
-
-  def draw
-    @image.draw(@x, @y, 1)
-  end
-end
-
-#### Car is class is meant to be pin
-#### will have to change image to image of a pin
-#### will eventually change name of class
-class Car
-  attr_reader :x, :y, :w, :h
-
-  def initialize(window)
-    @x = 600
-    @y = 400
-    @w = 10
-    @h = 20
-    @image = Gosu::Image.new(window, 'pin.png', false)
-  end
-
-  def draw
-    @image.draw(@x, @y, 1)
-  end
-
-  def move_up
-    @y = @y - 10
-  end
-
-  def move_down
-    @y = @y + 10
-  end
-
-  def move_left
-    @x = @x - 10
-  end
-
-  def move_right
-    @x = @x + 10
-  end
-end
-
 
 game = Game.new
 game.show
