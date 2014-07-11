@@ -1,4 +1,5 @@
 pop-the-ballon
+<a href="https://codeclimate.com/github/rishijain/pop-the-ballon"><img src="https://codeclimate.com/github/rishijain/pop-the-ballon.png" /></a>
 ==============
 ![Banner](http://i1248.photobucket.com/albums/hh483/jainrishi15/4eb79b39-c2ce-41c6-8043-698df519fccc_zps26ba0cc6.png)
 
